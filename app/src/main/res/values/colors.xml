@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1260AE</color>
+    <color name="colorPrimaryDark">#1260AE</color>
+    <color name="colorAccent">#1260AE</color>
+
+    <color name="pina_button_bg">#1260AE</color>
+</resources>
