@@ -24,7 +24,7 @@ The SDK works in tandem with the pinabox gateway. Since the developer may not ha
 
 ```java
 PinaConfig pinaConfig = new PinaConfig();
-pinaConfig.setSimulationMode(true); // <== UNCOMMENT THIS LINE
+pinaConfig.setSimulationMode(true); // <== UNCOMMENT THIS LINE IN PRODUCTION
 pinaConfig.setDivrtClientKey("DIVRT_KEY");// <== Replace with DIVRT client key.
 ```
 
@@ -79,7 +79,7 @@ repositories {
 
 dependencies {
     ...
-    implementation 'com.gitlab.divrt:pina:3.3.3'
+    implementation 'com.gitlab.divrt:pina:9.3.1.5'
 }
 ```
 
@@ -174,11 +174,6 @@ Add the above created application class in your manifest file
  </application>
 ```
 
-Change color to match your theme in colors.xml
-```bash
-<color name="pina_button_bg">#1260AE</color>
-```
-
 Change logo to match your app by placing image in drawable with name as pina_logo
 
 ## Contact
@@ -191,7 +186,7 @@ Unauthorized copying of this file, via any medium is strictly prohibited.
 
 Proprietary and confidential
 
-Written by Roopesh <roopesh.a@divrt.co>, May 2020
+Written by Roopesh <roopesh.a@divrt.co>, April 2021
 
 ## Author
 roopesh.a@divrt.co
