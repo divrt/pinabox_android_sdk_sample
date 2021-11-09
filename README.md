@@ -23,9 +23,9 @@ In order to demonstrate the simplicity of integration and usage of the pinabox s
 The SDK works in tandem with the pinabox gateway. Since the developer may not have the hardware handy, the SDK is built with a demo mode option. In order to activate the simulation mode, navigate to the MainActivity.java in the project just downloaded and uncomment the simulation mode as shown below. Also replace the DIVRT_KEY with the actual client key received from DIVRT. If you do not have one, contact support@divrt.co
 
 ```java
-PinaConfig pinaConfig = new PinaConfig();
-pinaConfig.setSimulationMode(true); // <== UNCOMMENT THIS LINE IN PRODUCTION
-pinaConfig.setDivrtClientKey("DIVRT_KEY");// <== Replace with DIVRT client key.
+JSONObject pinaConfigParams = new JSONObject();
+pinaConfigParams.put("secret_key", "DIVRT_KEY"); // <== Replace with DIVRT client key. 
+pinaConfigParams.put("simulationMode",true); // <== UNCOMMENT THIS LINE IN PRODUCTION
 ```
 
 1. Compile and run the sample app
@@ -93,6 +93,8 @@ DivrtPinaSdk divrtPinaSdk;
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
+    PinaConfig pinaConfig = new PinaConfig();
+    JSONObject pinaConfigParams = new JSONObject();
     pinaConfigParams.put("zid", "12345");
     pinaConfigParams.put("gateType", "IN");
     pinaConfigParams.put("secret_key", "DIVRT_KEY");
