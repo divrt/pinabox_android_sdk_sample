@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import co.divrt.pinasdk.pina.PinaConfig;
 import co.divrt.pinasdk.pina.PinaInterface;
 import co.divrt.pinasdk.pina.PinaSdk;
@@ -25,28 +28,55 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PinaConfig pinaConfigEntry = new PinaConfig();
-        pinaConfigEntry.setVehicleNumber("FAE6137");
-        pinaConfigEntry.setState("New York");
-        pinaConfigEntry.setZoneId("12345");
-        pinaConfigEntry.setInOrOut("IN");
-        pinaConfigEntry.setSimulationMode(true);
-        pinaConfigEntry.setDivrtClientKey("DIVRT_KEY");
-        pinaConfigEntry.setHelpText("Welcome to Commerce Garage");
+        try {
+            PinaConfig pinaConfig = new PinaConfig();
 
-        divrtPinaSdkIn = new PinaSdk(getApplicationContext(),MainActivity.this,pinaConfigEntry);
+            JSONObject pinaConfigParams = new JSONObject();
+            pinaConfigParams.put("zid", "12345");
+            pinaConfigParams.put("gateType", "IN");
+            pinaConfigParams.put("secret_key", "DIVRT_KEY");
+            pinaConfigParams.put("ostype","Android");
+            pinaConfigParams.put("uniqueID","PinaTest");
+            pinaConfigParams.put("simulationMode",true);
 
+            JSONObject pinaSdkParams = new JSONObject();
+            pinaSdkParams.put("helpText","Welcome to ABC Garage");
 
-        PinaConfig pinaConfigExit = new PinaConfig();
-        pinaConfigExit.setVehicleNumber("FAE6137");
-        pinaConfigExit.setState("New York");
-        pinaConfigExit.setZoneId("12345");
-        pinaConfigExit.setInOrOut("OUT");
-        pinaConfigExit.setSimulationMode(true);
-        pinaConfigExit.setDivrtClientKey("DIVRT_KEY");
-        pinaConfigExit.setHelpText("Thank you for exiting Commerce B Garage");
+            pinaConfig.setPinaConfigParams(pinaConfigParams);
+            pinaConfig.setPinaSdkParams(pinaSdkParams);
+            pinaConfig.setPinaClientParams(new JSONObject());
+            pinaConfig.setPinaMiscParams(new JSONObject());
 
-        divrtPinaSdkOut = new PinaSdk(getApplicationContext(),MainActivity.this,pinaConfigExit);
+            divrtPinaSdkIn = new PinaSdk(getApplicationContext(),MainActivity.this);
+            divrtPinaSdkIn.setPinaConfig(pinaConfig);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            PinaConfig pinaConfig = new PinaConfig();
+
+            JSONObject pinaConfigParams = new JSONObject();
+            pinaConfigParams.put("zid", "12345");
+            pinaConfigParams.put("gateType", "OUT");
+            pinaConfigParams.put("secret_key", "DIVRT_KEY");
+            pinaConfigParams.put("ostype","Android");
+            pinaConfigParams.put("uniqueID","PinaTest");
+            pinaConfigParams.put("simulationMode",true);
+
+            JSONObject pinaSdkParams = new JSONObject();
+            pinaSdkParams.put("helpText","Thank you for visiting ABC Garage");
+
+            pinaConfig.setPinaConfigParams(pinaConfigParams);
+            pinaConfig.setPinaSdkParams(pinaSdkParams);
+            pinaConfig.setPinaClientParams(new JSONObject());
+            pinaConfig.setPinaMiscParams(new JSONObject());
+
+            divrtPinaSdkOut = new PinaSdk(getApplicationContext(),MainActivity.this);
+            divrtPinaSdkOut.setPinaConfig(pinaConfig);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -104,17 +134,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickEntry(View view) {
-
         inOrOut = "IN";
         divrtPinaSdkIn.gateHandler(new PinaInterface() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(String s) {
                 Toast.makeText(getBaseContext(),"In Gate Opened",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String message) {
                 Toast.makeText(getBaseContext(),message,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onInfo(String s) {
+
             }
         });
     }
@@ -124,13 +158,18 @@ public class MainActivity extends AppCompatActivity {
         inOrOut = "OUT";
         divrtPinaSdkOut.gateHandler(new PinaInterface() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(String s) {
                 Toast.makeText(getBaseContext(),"Out Gate Opened",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String message) {
                 Toast.makeText(getBaseContext(),message,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onInfo(String s) {
+
             }
         });
 
