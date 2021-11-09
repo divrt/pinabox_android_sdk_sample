@@ -79,7 +79,7 @@ repositories {
 
 dependencies {
     ...
-    implementation 'com.gitlab.divrt:pina:9.3.1.5'
+    implementation 'com.gitlab.divrt:pina:11.1'
 }
 ```
 
@@ -93,15 +93,23 @@ DivrtPinaSdk divrtPinaSdk;
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_home);
-    PinaConfig pinaConfig = new PinaConfig();
-    pinaConfig.setZoneId("62276");
-    pinaConfig.setInOrOut("IN");
-    pinaConfig.setVehicleNumber("FAE6137");
-    pinaConfig.setState("New York");
-    pinaConfig.setDivrtClientKey("DIVRT_KEY");//Please contact us to get your key
-    pinaConfig.setHelpText("Thank you for visiting Commerce Garage");
+    pinaConfigParams.put("zid", "12345");
+    pinaConfigParams.put("gateType", "IN");
+    pinaConfigParams.put("secret_key", "DIVRT_KEY");
+    pinaConfigParams.put("ostype","Android");
+    pinaConfigParams.put("uniqueID","PinaTest");
+    pinaConfigParams.put("simulationMode",true);
 
-   divrtPinaSdk = new PinaSdk(getApplicationContext(),MainActivity.this,pinaConfig);
+    JSONObject pinaSdkParams = new JSONObject();
+    pinaSdkParams.put("helpText","Welcome to ABC Garage");
+
+    pinaConfig.setPinaConfigParams(pinaConfigParams);
+    pinaConfig.setPinaSdkParams(pinaSdkParams);
+    pinaConfig.setPinaClientParams(new JSONObject());
+    pinaConfig.setPinaMiscParams(new JSONObject());
+
+    divrtPinaSdk = new PinaSdk(getApplicationContext(),MainActivity.this);
+    divrtPinaSdk.setPinaConfig(pinaConfig);
 
 }
 
@@ -116,13 +124,18 @@ protected void onResume() {
 public void onButtonClick(View view) {
      divrtPinaSdk.gateHandler(new PinaInterface() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(String message) {
                 Toast.makeText(getBaseContext(),"In Gate Opened",Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String message) {
                 Toast.makeText(getBaseContext(),message,Toast.LENGTH_SHORT).show();
+            }
+            
+            @Override
+            public void onInfo(String message) {
+
             }
       });
 }
