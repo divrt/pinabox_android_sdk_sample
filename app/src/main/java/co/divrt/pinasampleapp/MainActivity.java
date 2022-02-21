@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClickEntry(View view) {
         inOrOut = "IN";
-        divrtPinaSdkIn.gateHandler(new PinaInterface() {
+        divrtPinaSdkIn.pinaGateHandler(new PinaInterface() {
             @Override
             public void onSuccess(String s) {
                 Toast.makeText(getBaseContext(),"In Gate Opened",Toast.LENGTH_SHORT).show();
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
     public void onClickExit(View view) {
 
         inOrOut = "OUT";
-        divrtPinaSdkOut.gateHandler(new PinaInterface() {
+        divrtPinaSdkOut.pinaGateHandler(new PinaInterface() {
             @Override
             public void onSuccess(String s) {
                 Toast.makeText(getBaseContext(),"Out Gate Opened",Toast.LENGTH_SHORT).show();
