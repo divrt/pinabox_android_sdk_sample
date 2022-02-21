@@ -124,7 +124,7 @@ protected void onResume() {
 
 /*Call this method to open divrtpinasdk */
 public void onButtonClick(View view) {
-     divrtPinaSdk.gateHandler(new PinaInterface() {
+     divrtPinaSdk.pinaGateHandler(new PinaInterface() {
             @Override
             public void onSuccess(String message) {
                 Toast.makeText(getBaseContext(),"In Gate Opened",Toast.LENGTH_SHORT).show();
